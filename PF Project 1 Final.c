@@ -25,48 +25,6 @@ typedef struct{
 	transaction transactions[50];
 } account;
 
-/*void recordGeneralLedger(int i,char name[],char date[],int value){
-	FILE *file=fopen("GeneralLedgerEntries.dat","ab");
-	if(file==NULL){
-		printf("Error! Could not open file.");
-		return;
-	}
-	fclose(file);
-	transaction a;
-	switch(i){
-		case 1:
-			a.t_id=-1;
-			strcpy(a.date,date);
-			a.debit=0;
-			strcpy(a.details,name);
-			a.credit=value;
-			if(tr_id==1){
-				a.transactions->balance=a.transactions.credit*-1;
-			}
-			else{
-				fseek(file,((tr_id-1)*sizeof(transaction)),fseek(file,(acc_id*sizeof(account)),SEEK SET));
-				fread(&b,sizeof(account),file);
-				a.transactions.balance=b.transactions.balance-a.transactions.debit;
-			}//usefull while printing the account 
-			break;
-		case 2:
-			a.t_id=-2;
-			strcpy(a.date,date);
-			a.credit=0;
-			strcpy(a.details,name);
-			a.debit=value;
-			break;
-		case 3:
-			a.t_id=-3;
-			strcpy(a.date,date);
-			a.credit=0;
-			strcpy(a.details,name);
-			a.debit=value;
-			break;
-	}
-	fwrite(&a,sizeof(transaction),1,file);
-}*/
-
 void addTransaction(int acc_id) {
     FILE *file = fopen("accounts.dat", "rb+");
     if (file == NULL) {
@@ -128,7 +86,7 @@ void addTransaction(int acc_id) {
 			else{
                 a.transactions[tr_id].balance=a.transactions[tr_id-1].balance+a.transactions[tr_id].debit;
             }
-            //recordGeneralLedger(1,a.name,a.transactions[tr_id].date,a.transactions[tr_id].debit);
+           
             break;
 
         case 2:
@@ -142,7 +100,7 @@ void addTransaction(int acc_id) {
 			else{
                 a.transactions[tr_id].balance=a.transactions[tr_id-1].balance-a.transactions[tr_id].credit;
             }
-            //recordGeneralLedger(2, a.name,a.transactions[tr_id].date,a.transactions[tr_id].credit);
+           
             break;
 
         case 3:
@@ -156,7 +114,6 @@ void addTransaction(int acc_id) {
 			else {
                 a.transactions[tr_id].balance=a.transactions[tr_id-1].balance-a.transactions[tr_id].credit;
             }
-            //recordGeneralLedger(3, a.name,a.transactions[tr_id].date,a.transactions[tr_id].credit);
             break;
     }
     a.transactions[tr_id].t_id = tr_id + 1;
@@ -256,31 +213,9 @@ void ViewAccount(int id){
 		}
 		printf("%.2f\n",a.transactions[i].balance);
 		
-        //if (a.transactions[i].t_id > 0&&a.transactions[i].t_id<49&&a.transactions[i].t_id!=101) { 
-         //   printf("%s\t\t%s\t\t%.2f\t\t\t%.2f\t\t\t\t%.2f\n", a.transactions[i].date, a.transactions[i].details,  a.transactions[i].debit, a.transactions[i].credit, a.transactions[i].balance);
-        //}
+       
     }
-    /*for(i=0;a.transactions[i].t_id!=0;i++){
-    	printf("%s",a.transactions[i].date);
-    	printf("\t\t%s",a.transactions[i].details);
-    	for(j=0;j<24-strlen(a.transactions[i].details);j++){
-    		printf(" ");
-		}
-		printf("%.2f",a.transactions[i].debit);
-		for(d=a.transactions[i].debit; d!=0; d/=10){
-    		//printf(" ");
-		}
-		for(j=20-d;j>0;j--){
-			printf(" ");
-		}
-		printf("   ");
-		printf("%.2f",a.transactions[i].credit);
-		for(d=a.transactions[i].credit; d!=0; d/=10){
-    		printf(" ");
-		}
-		printf("  ");
-		printf("%.2f\n",a.transactions[i].balance);
-	}*/
+    
     fclose(file);
 }
 
@@ -382,31 +317,6 @@ void ViewTrialBalance(){
     }
     fclose(file);
 	gl_acc x = GetGLAcc();
-
-    /*FILE *gl_file = fopen(gl_filename,"rb");
-    if(gl_file==NULL){
-        printf("Error! Could not open GeneralLedgerEntries.dat file.\n");
-        return;
-    }
-    
-    float salesDebit=0,salesCredit=0;
-    float salesReturnDebit=0,salesReturnCredit=0;
-    float bankDebit=0,bankCredit=0;
-    
-    while(fread(&t,sizeof(transaction),1,gl_file)){
-        if(strcmp(t.details,"Sales")==0){
-            salesCredit+=t.credit;
-            salesDebit+=t.debit;
-        } 
-		else if(strcmp(t.details, "Sales return")==0){
-            salesDebit+=t.debit;
-            salesCredit+=t.credit;
-        } 
-		else if(strcmp(t.details,"Bank")==0){
-            bankDebit+=t.debit;
-            bankCredit+=t.credit;
-        }
-    } */
     
     printf("%s","Sales");
     for(i=0;i<24;i++){
@@ -431,7 +341,6 @@ void ViewTrialBalance(){
 int main(void){
 	int *debitptr,*creditptr,*balanceptr;
 	int i,j, checkaccid,checktid,choice;
-//	account accounts[100];
 	printf("---------------Accounts Management system---------------\n");
 	
 	do{
