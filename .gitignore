@@ -1,0 +1,23 @@
+# Ignore compiled files
+*.o
+*.out
+*.exe
+*.a
+*.so
+*.dll
+
+# Ignore binary data files (your account and ledger data)
+accounts.dat
+GeneralLedgerEntries.dat
+
+# Ignore backup files created by editors
+*~
+*.bak
+*.swp
+
+# Ignore IDE-specific files (for example, for Visual Studio Code)
+.vscode/
+.idea/
+
+# Ignore log files
+*.log
